@@ -1,0 +1,160 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f5f7fa;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 10;
+}
+
+.logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+  color: #4a6ee0;
+  margin: 0;
+}
+
+.main-nav {
+  margin-top: 20px;
+  flex: 1;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: #f5f7fa;
+}
+
+.nav-item.active {
+  background-color: #eef2ff;
+  color: #4a6ee0;
+  border-left: 3px solid #4a6ee0;
+}
+
+.nav-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.content-area {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  box-sizing: border-box;
+  width: calc(100% - 250px);
+}
+
+.content-wrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-height: calc(100vh - 40px);
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+    padding: 15px 0;
+  }
+  
+  .logo {
+    padding: 0 10px 15px;
+    text-align: center;
+  }
+  
+  .logo h1 {
+    font-size: 0;
+  }
+  
+  .logo h1::first-letter {
+    font-size: 1.5rem;
+  }
+  
+  .nav-item {
+    padding: 12px 0;
+    justify-content: center;
+  }
+  
+  .nav-item span {
+    display: none;
+  }
+  
+  .nav-item i {
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
+  
+  .content-area {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 10px 0;
+  }
+  
+  .main-nav ul {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .nav-item {
+    flex-direction: column;
+    padding: 10px 5px;
+  }
+  
+  .nav-item i {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  
+  .nav-item span {
+    display: block;
+    font-size: 0.7rem;
+  }
+  
+  .content-area {
+    margin-left: 0;
+    width: 100%;
+  }
+}

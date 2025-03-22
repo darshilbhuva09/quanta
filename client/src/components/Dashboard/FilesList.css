@@ -1,0 +1,121 @@
+.files-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Force all elements to use the same box model */
+.files-container *,
+.files-container *::before,
+.files-container *::after {
+  box-sizing: border-box !important;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Reset file box styling to ensure consistency */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+/* Ensure all file boxes have identical dimensions and appearance */
+.file-box {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 150px; /* Fixed height for all boxes */
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #eaeaea;
+}
+
+.file-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.file-icon {
+  font-size: 2rem;
+  color: #4a6ee0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  height: 40px; /* Fixed height for icon area */
+}
+
+.file-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 50px); /* Account for icon height + margin */
+}
+
+.file-name {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 40px; /* Limit height to prevent overflow */
+}
+
+.file-meta {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+/* Ensure consistent layout across different screen sizes */
+@media (max-width: 768px) {
+  .files-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .file-box {
+    height: 140px; /* Slightly smaller on medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .file-box {
+    height: 130px; /* Even smaller on mobile */
+  }
+}

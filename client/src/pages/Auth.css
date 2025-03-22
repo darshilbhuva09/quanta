@@ -1,0 +1,210 @@
+/* Auth.css - Styling for the authentication pages */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background-color: #f0f2f5;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.auth-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.app-title {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.auth-navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.nav-btn {
+  background-color: transparent;
+  color: #0066ff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+}
+
+.nav-btn:hover {
+  background-color: rgba(0, 102, 255, 0.1);
+}
+
+.nav-btn.active {
+  background-color: #0066ff;
+  color: white;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0066ff;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
+
+.message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.message.success {
+  color: #28a745;
+}
+
+.message.error {
+  color: #dc3545;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 500px) {
+  .auth-card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  
+  .app-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Debug panel */
+.debug-info {
+  margin-top: 20px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #555;
+  border: 1px solid #ddd;
+}
+
+.debug-info p {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.debug-btn {
+  background: #6772e5;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.debug-btn:hover {
+  background: #5a65d1;
+}
+
+/* Status indicators */
+#serverStatus {
+  font-weight: bold;
+}
+
+#serverStatus.connected {
+  color: green;
+}
+
+#serverStatus.error {
+  color: red;
+}
+
+/* Button states */
+.submit-btn.submitting {
+  background-color: #888;
+  cursor: wait;
+}
+
+.submit-btn.success {
+  background-color: #4CAF50;
+}
+
+/* Improve message display */
+.message {
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.message.error {
+  background-color: rgba(255, 99, 71, 0.1);
+  border-left: 3px solid #ff6347;
+  color: #d32f2f;
+}
+
+.message.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-left: 3px solid #4CAF50;
+  color: #388e3c;
+}

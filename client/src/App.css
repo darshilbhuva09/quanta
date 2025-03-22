@@ -1,0 +1,268 @@
+/* Add this to your existing App.css */
+/* App container to ensure consistent layout */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure consistent styling for auth pages */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 20px;
+}
+
+.auth-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #eaeaea;
+}
+
+/* Fix for dashboard layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Fix for content areas */
+.content-area {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f7fa;
+}
+
+/* Fix for card layouts */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #eaeaea;
+}
+
+/* Fix for grid layouts */
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Fix for box layouts */
+.box {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #eaeaea;
+}
+
+/* Ensure consistent button styling */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #4a6ee0;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #3a5dcc;
+}
+
+.btn-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+/* Fix for form elements */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #4a6ee0;
+}
+
+/* Fix for labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Fix for error messages */
+.error-message {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+/* Loading spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pagination-btn {
+  padding: 8px 15px;
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #e4e6e9;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #666;
+}
+
+/* No Files Message */
+.no-files {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+/* Share Link Container */
+.share-link-container {
+  margin: 15px 0;
+}
+
+.share-link-box {
+  display: flex;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.share-link-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.share-link-copy {
+  background-color: #f0f2f5;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.share-link-copy:hover {
+  background-color: #e4e6e9;
+}
+
+/* Email Input Container */
+.email-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.email-icon {
+  position: absolute;
+  left: 10px;
+  color: #666;
+}
+
+.email-input-container input {
+  padding-left: 35px;
+  width: 100%;
+}
+
+/* Optimize for mobile */
+@media (max-width: 768px) {
+  .file-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .file-actions {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .share-options {
+    flex-direction: column;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+}

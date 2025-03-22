@@ -1,0 +1,519 @@
+/* Root Styles - Full width */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Quanta Dashboard Styles - Absolutely Full Width */
+.quanta-dashboard {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+  overflow-x: hidden;
+  padding: 0;
+  margin-top: 0;
+  min-height: 100vh;
+}
+
+/* Header */
+.quanta-header {
+  width: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1001; /* Increased z-index to ensure header is above everything */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  height: 60px;
+}
+
+/* Logo */
+.quanta-logo {
+  height: 40px;
+  font-size: xx-large;
+  color: rgb(22, 10, 10)
+}
+
+/* Nav Menu */
+.quanta-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* User Icon */
+.quanta-user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Tab Buttons */
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s ease;
+  max-width: 200px;
+}
+
+.tab-btn:hover {
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.tab-btn.active {
+  color: #3498db;
+  border-bottom: 2px solid #3498db;
+  font-weight: 500;
+}
+
+/* Storage Indicator Styles */
+.storage-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  height: 40px;
+}
+
+.storage-icon {
+  color: #4361ee;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.storage-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.storage-bar {
+  width: 150px;
+  height: 6px;
+  background-color: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.storage-used {
+  height: 100%;
+  background-color: #4361ee;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.storage-text {
+  font-size: 12px;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.quanta-user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.quanta-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #4361ee;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  color: #dc3545;
+}
+
+/* Main Content - Full Width layout */
+.quanta-main {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0; /* removed auto centering */
+  position: relative;
+  padding-top: 60px; /* Just enough for header height */
+  z-index: 50; /* Ensure content stays below header */
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Change from center to stretch for full width */
+  overflow-x: hidden;
+}
+
+/* Tabs - Full width */
+.quanta-tabs {
+  display: flex !important;
+  background-color: white;
+  border-radius: 0;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible; /* Changed from hidden to ensure visibility */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 100%;
+  position: sticky !important;
+  top: 60px !important; /* Stick right below the fixed header */
+  z-index: 1000 !important; /* Increased to ensure tabs are above content */
+  left: 0;
+  right: 0;
+}
+
+.tab-btn {
+  flex: 1 1 50%;
+  background: none;
+  border: none;
+  padding: 15px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+  font-weight: 500;
+  max-width: none;
+  position: relative !important; /* Enable z-index */
+  z-index: 1000 !important; /* Ensure buttons are clickable */
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.tab-btn:first-child {
+  border-right: 1px solid #eee;
+}
+
+.tab-btn:hover {
+  background-color: #f5f7fa;
+  color: #4361ee;
+}
+
+.tab-btn.active {
+  background-color: #4361ee;
+  color: white;
+  font-weight: 500;
+}
+
+.tab-icon {
+  font-size: 18px;
+}
+
+/* Content Area - Full Viewport Width */
+.quanta-content {
+  box-sizing: border-box;
+  width: 100vw !important; /* Use full viewport width */
+  max-width: none !important; /* Removed width constraint for full width */
+  padding: 20px;
+  margin: 0 !important; /* Remove auto margins to avoid centering */
+  margin-top: 0 !important;
+  background-color: white;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 400px;
+  position: relative;
+  z-index: 10; /* Increased to ensure proper layering */
+  overflow-x: hidden;
+  overflow-y: auto; /* Enable vertical scrolling within content area */
+  flex: 1;
+  /* Add padding to prevent overlap with tabs */
+  padding-top: 30px !important;
+  padding-bottom: 50px; /* Add padding at bottom for better spacing */
+  height: auto; /* Allow content to expand */
+  min-height: calc(100vh - 120px); /* Account for header and tabs */
+}
+
+/* File List Specific - Contained Width */
+.qs-file-list-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0 auto;
+  /* Ensure proper spacing from tabs */
+  padding-top: 5px;
+  margin-top: 10px; /* Reduced from 30px to 10px */
+  padding-bottom: 30px; /* Add space at the bottom */
+  position: relative;
+  z-index: 1; /* Lower than tabs */
+}
+
+/* File Grid - Consistent with contained layout */
+.qs-file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  /* Ensure grid items don't overlap with navbar */
+  position: relative;
+  z-index: 1;
+}
+
+/* Footer Styles */
+.quanta-footer {
+  background-color: white;
+  padding: 15px 30px;
+  text-align: center;
+  border-top: 1px solid #eee;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.copyright-text {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Extra styling for larger screens - Full Width */
+@media (min-width: 1400px) {
+  .quanta-main {
+    padding-top: 60px; /* Keep consistent with header height */
+    max-width: 100% !important; /* Full width */
+  }
+  
+  .quanta-tabs {
+    max-width: 100% !important; /* Full width */
+    width: 100% !important;
+  }
+  
+  .quanta-content {
+    max-width: none !important; /* Ensure full width on large screens */
+    width: 100% !important;
+  }
+  
+  .qs-file-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .quanta-main {
+    width: 100%;
+    padding-top: 60px;
+    align-items: stretch;
+  }
+  
+  .quanta-tabs {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .quanta-content {
+    width: 100vw !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  
+  .qs-file-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  
+  .storage-indicator {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .quanta-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+    height: auto;
+    min-height: 60px;
+    z-index: 1001;
+  }
+  
+  .quanta-main {
+    padding-top: 100px; /* Adjust for taller header on mobile */
+  }
+  
+  .quanta-tabs {
+    position: sticky;
+    top: 100px; /* Adjust to match taller header */
+    width: 100%;
+    max-width: 100%;
+    z-index: 99;
+  }
+  
+  .quanta-content {
+    width: 100vw !important;
+    margin: 0 !important;
+    max-width: none !important;
+    padding: 15px;
+    /* Add more padding on mobile to prevent overlap */
+    padding-top: 30px;
+    min-height: calc(100vh - 160px); /* Account for taller header and tabs */
+  }
+  
+  .quanta-user-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .user-name {
+    display: none;
+  }
+  
+  .logout-text {
+    display: none;
+  }
+  
+  .tab-text {
+    display: none;
+  }
+  
+  .tab-icon {
+    font-size: 20px;
+  }
+  
+  .storage-indicator {
+    display: none;
+  }
+  
+  .quanta-footer {
+    padding: 10px 15px;
+  }
+  
+  .copyright-text {
+    font-size: 12px;
+  }
+}
+
+/* Remove conflicting max-width constraints */
+.enhanced-dashboard-content,
+.header-content {
+  max-width: none !important;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+/* Ensure proper scrolling behavior */
+html, body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* CRITICAL FIX: Ensure tabs are always visible and properly positioned */
+.quanta-tabs {
+  position: fixed !important;
+  top: 60px !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 999 !important;
+  display: flex !important;
+  background-color: white !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Adjust main content to account for fixed tabs */
+.quanta-content {
+  margin-top: 60px !important; /* Space for fixed tabs */
+  padding-top: 20px !important;
+  width: 100vw !important; /* Ensure full viewport width */
+  max-width: none !important; /* Remove width constraint for full width */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Ensure file list doesn't overlap with tabs */
+.qs-file-list-container {
+  margin-top: 0 !important;
+  padding-top: 5px !important;
+}
+
+/* Fix for file grid to ensure it doesn't cause layout issues */
+.qs-file-grid {
+  overflow: visible !important;
+  z-index: 1 !important;
+}
+
+/* Ensure tab buttons are always visible and clickable */
+.tab-btn {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1000 !important;
+}
+
+/* Fix for mobile layout */
+@media (max-width: 768px) {
+  .quanta-tabs {
+    top: 100px !important; /* Adjust for taller mobile header */
+  }
+  
+  .quanta-content {
+    margin-top: 60px !important;
+  }
+}

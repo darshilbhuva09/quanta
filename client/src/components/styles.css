@@ -1,0 +1,252 @@
+/* Loading Spinner */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pagination-btn {
+  padding: 8px 15px;
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #e4e6e9;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #666;
+}
+
+/* No Files Message */
+.no-files {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+/* Share Link Container */
+.share-link-container {
+  margin: 15px 0;
+}
+
+.share-link-box {
+  display: flex;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.share-link-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.share-link-copy {
+  background-color: #f0f2f5;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.share-link-copy:hover {
+  background-color: #e4e6e9;
+}
+
+/* Email Input Container */
+.email-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.email-icon {
+  position: absolute;
+  left: 10px;
+  color: #666;
+}
+
+.email-input-container input {
+  padding-left: 35px;
+  width: 100%;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+/* File Info in Modal */
+.file-info-modal {
+  background-color: #f5f7fa;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* QR Code Container */
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.qr-code {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.qr-code img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Email Container */
+.email-container {
+  margin: 15px 0;
+}
+
+/* Button Styles */
+.btn {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: #4361ee;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #3a56d4;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Optimize for mobile */
+@media (max-width: 768px) {
+  .file-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .file-actions {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .share-options {
+    flex-direction: column;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+}

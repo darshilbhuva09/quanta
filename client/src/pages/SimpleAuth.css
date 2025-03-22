@@ -1,0 +1,141 @@
+/* Simple Auth Styles */
+.simple-auth-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.simple-auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.simple-auth-header h1 {
+  font-size: 28px;
+  color: #000;
+  margin: 0;
+}
+
+.simple-auth-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.simple-auth-nav a {
+  text-decoration: none;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.simple-auth-nav a.active {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.simple-auth-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.simple-auth-form-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.simple-form-group {
+  margin-bottom: 15px;
+}
+
+.simple-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.simple-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.simple-button:hover {
+  background-color: #0056b3;
+}
+
+/* Remember Me Checkbox */
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.simple-checkbox-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+
+.simple-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.simple-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.simple-checkbox-container:hover input ~ .simple-checkmark {
+  background-color: #ccc;
+}
+
+.simple-checkbox-container input:checked ~ .simple-checkmark {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+.simple-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.simple-checkbox-container input:checked ~ .simple-checkmark:after {
+  display: block;
+}
+
+.simple-checkbox-container .simple-checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 3px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

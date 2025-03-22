@@ -1,0 +1,767 @@
+/* Quanta Share Styles - Modern UI for file sharing */
+
+/* Force body and html to be full width */
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Colors */
+:root {
+  --primary: #4361ee;
+  --primary-light: #f0f7ff;
+  --primary-dark: #3a56d4;
+  --success: #4caf50;
+  --danger: #dc3545;
+  --warning: #ff9800;
+  --info: #2196f3;
+  --text-dark: #333;
+  --text-medium: #666;
+  --text-light: #999;
+  --border: #ddd;
+  --background: #f9f9f9;
+  --card: #ffffff;
+}
+
+/* Upload Container - Contained Width */
+.qs-upload-container {
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 8px;
+}
+
+/* Upload Area - Better spacing */
+.qs-upload-area {
+  border: 2px dashed #3498db;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  background-color: rgba(52, 152, 219, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.qs-upload-area:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Upload Icon */
+.qs-upload-icon {
+  font-size: 48px;
+  color: #4361ee;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qs-upload-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+/* Upload Text */
+.qs-upload-text {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.qs-upload-subtext {
+  color: #666;
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.qs-browse-text {
+  color: #4361ee;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.qs-upload-input {
+  display: none;
+}
+
+/* Selected File */
+.qs-selected-file {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  padding: 15px;
+  background-color: var(--primary-light);
+  border-radius: 8px;
+}
+
+.qs-file-preview {
+  background-color: rgba(67, 97, 238, 0.1);
+  border-radius: 8px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.qs-file-type-icon {
+  color: var(--primary);
+  font-size: 24px;
+}
+
+.qs-file-info {
+  flex: 1;
+}
+
+.qs-file-name-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.qs-file-name {
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 3px 0;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.qs-remove-file {
+  background: none;
+  border: none;
+  color: var(--text-medium);
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.qs-remove-file:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--danger);
+}
+
+.qs-file-size {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+}
+
+.qs-upload-button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.qs-upload-button:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Upload Progress */
+.qs-upload-progress {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.qs-progress-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.qs-progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.qs-uploading-text {
+  color: var(--primary);
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* File List Styles - Contained Width */
+.qs-file-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1100px;
+  position: relative;
+  padding: 0;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  overflow: visible; /* Ensures sticky children work properly */
+}
+
+/* File List Header */
+.qs-file-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px 0 5px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: white; /* ensures header background hides underlying scroll content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* subtle shadow for depth */
+  will-change: transform; /* performance optimization for sticky elements */
+}
+
+.qs-file-list-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  padding-left: 0;
+  margin-left: 10px;
+}
+
+/* Search Styling */
+.qs-search-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-right: 0;
+}
+
+/* File List Search */
+.qs-search-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 250px;
+  max-width: 100%;
+}
+
+/* File Grid - Contained Width */
+.qs-file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 10px 20px 20px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/* File Card - final tweaks */
+.qs-file-card {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qs-file-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* File Card Header */
+.qs-file-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+/* File Icon Container */
+.qs-file-icon-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #f0f7ff;
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+/* File Info */
+.qs-file-info {
+  flex: 1;
+  margin-left: 12px;
+  overflow: hidden;
+}
+
+/* File Name */
+.qs-file-name {
+  font-weight: 500;
+  margin: 0 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333;
+}
+
+.qs-file-meta {
+  display: flex;
+  font-size: 12px;
+  color: var(--text-medium);
+}
+
+.qs-file-size {
+  font-size: 13px;
+  color: #777;
+}
+
+.qs-file-card-body {
+  padding: 0 16px 12px;
+}
+
+.qs-file-details {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.qs-file-detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.qs-detail-label {
+  color: #888;
+}
+
+.qs-detail-value {
+  color: #444;
+  font-weight: 400;
+  text-align: right;
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* File Actions Section */
+.qs-file-actions {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #eee;
+  padding: 12px 10px;
+  background-color: #f8f9fa;
+}
+
+.qs-action-button {
+  background: none;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qs-action-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.qs-download-btn:hover {
+  color: #4361ee;
+}
+
+.qs-delete-btn:hover {
+  color: #dc3545;
+}
+
+/* Empty State */
+.qs-empty-files {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--background);
+  border-radius: 10px;
+  border: 2px dashed var(--border);
+}
+
+.qs-empty-icon {
+  font-size: 48px;
+  color: var(--text-light);
+  margin-bottom: 15px;
+}
+
+.qs-empty-title {
+  font-size: 18px;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.qs-empty-text {
+  color: var(--text-medium);
+}
+
+/* Loading State */
+.qs-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.qs-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(67, 97, 238, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: qs-spin 1s ease-in-out infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes qs-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .qs-file-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .qs-file-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .qs-search-container {
+    margin-top: 15px;
+    max-width: 100%;
+  }
+  
+  .qs-upload-area {
+    padding: 20px;
+  }
+  
+  .qs-upload-icon {
+    font-size: 36px;
+  }
+  
+  .qs-upload-icon svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Modal Styles */
+.qs-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.qs-modal-content {
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: qs-modal-appear 0.3s ease-out;
+}
+
+@keyframes qs-modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.qs-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.qs-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.qs-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.qs-modal-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.qs-modal-body {
+  padding: 20px;
+}
+
+.qs-modal-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+}
+
+.qs-file-being-shared {
+  display: flex;
+  align-items: center;
+  background-color: #f5f7ff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.qs-file-icon-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: rgba(67, 97, 238, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.qs-file-name-shared {
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Share Link Styles */
+.qs-share-link-container {
+  margin-bottom: 20px;
+}
+
+.qs-share-instructions {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.qs-share-link-box {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qs-share-link-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.qs-share-link-input:focus {
+  outline: none;
+}
+
+.qs-share-link-copy {
+  background-color: #f0f2f5;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.qs-share-link-copy:hover {
+  background-color: #e4e6e9;
+}
+
+.qs-share-link-copy.copied {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* QR Code Styles */
+.qs-qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.qs-qr-code {
+  background-color: white;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.qs-qr-code img {
+  max-width: 100%;
+  height: auto;
+}
+
+.qs-copy-link-button {
+  background-color: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.qs-copy-link-button:hover {
+  background-color: #3a56d4;
+}
+
+/* Email Styles */
+.qs-email-container {
+  margin-bottom: 20px;
+}
+
+.qs-email-form {
+  margin-top: 15px;
+}
+
+.qs-form-group {
+  margin-bottom: 15px;
+}
+
+.qs-email-input-container {
+  position: relative;
+}
+
+.qs-email-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.qs-email-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.qs-email-input:focus {
+  outline: none;
+  border-color: #4361ee;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+.qs-send-email-button {
+  background-color: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.qs-send-email-button:hover {
+  background-color: #3a56d4;
+}
+
+.qs-send-email-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+

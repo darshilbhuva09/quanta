@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.quanta-container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.quanta-container h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.toggle-buttons button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggle-buttons button.active {
+  background: #0056b3;
+}
+
+.toggle-buttons button:hover {
+  background: #0056b3;
+}
+
+.quanta-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.quanta-container form h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.quanta-container input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.quanta-container button[type="submit"] {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.quanta-container button[type="submit"]:hover {
+  background: #218838;
+}
+
+.hidden {
+  display: none;
+}
+
+#message {
+  margin-top: 1rem;
+  color: #dc3545;
+  font-size: 0.9rem;
+}
