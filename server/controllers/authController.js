@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const driveServices = require('../google-drive_services/driveServices')
 
 // @desc    Register a user
 // @route   POST /api/auth/register
@@ -29,6 +30,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'Username already taken' });
     }
 
+
     // Create new user
     const user = new User({
       username,
@@ -40,6 +42,25 @@ exports.register = async (req, res) => {
     await user.save();
     console.log('User saved successfully:', user._id);
 
+     //create folder in drive
+
+     const folderResponse = await driveServices.createFolder(username);
+     folderId = folderResponse.folderId;
+     console.log("folderResponse"+ folderResponse)
+     console.log(folderResponse.folderId)
+
+    if (!folderResponse || !folderResponse.folderId) {
+      return res.status(500).json({ message: "User registered, but folder creation failed" });
+    }
+    //save folder id in datbase
+    user.folderId = folderId;
+    try{
+      user.set("folderId" , folderId);
+      await user.save();  
+    }catch(error){
+      return res.status(500).json({message : "errror in user folder id save"})
+    }
+  
     // Generate JWT
     const payload = {
       user: {
@@ -47,6 +68,7 @@ exports.register = async (req, res) => {
       }
     };
 
+     
     jwt.sign(
       payload,
       process.env.JWT_SECRET || 'quantasharesecret',
@@ -60,7 +82,12 @@ exports.register = async (req, res) => {
         res.json({ token });
       }
     );
+
+  
+
+
   } catch (err) {
+    console.log(error)
     console.error('Registration error:', err.message);
     // More descriptive error handling
     if (err.name === 'ValidationError') {

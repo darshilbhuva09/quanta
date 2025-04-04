@@ -5,7 +5,7 @@ const FilesList = ({ files, onFileSelect }) => {
   return (
     <div className="files-container">
       <h2 className="section-title">My Files</h2>
-      
+      {files.map((file) => (console.log(file.name,":", file.size)))}
       {files && files.length > 0 ? (
         <div className="files-grid">
           {files.map((file) => (

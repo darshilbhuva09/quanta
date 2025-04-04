@@ -6,10 +6,12 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const File = require('../models/File');
+const driveServices = require('../google-drive_services/driveServices');
 
 // Set up multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    // console.log("destination")
     const userDir = path.join(__dirname, '../uploads', req.user.id.toString());
     
     // Create directory if it doesn't exist
@@ -26,9 +28,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ 
-  storage,
+  storage : multer.memoryStorage() ,
   limits: { fileSize: 200 * 1024 * 1024 } // 200MB limit (increased from 10MB)
 });
+
 
 // @route   POST api/files/upload
 // @desc    Upload a file
@@ -44,7 +47,7 @@ router.get('/', auth, fileController.getUserFiles);
 // @route   GET api/files/download/:shortId
 // @desc    Download a file by short ID (public access)
 // @access  Public
-router.get('/download/:shortId', fileController.downloadFile);
+router.get('/download/:fileId', fileController.downloadFile);
 
 // @route   GET api/files/:id
 // @desc    Get file by ID
@@ -62,30 +65,48 @@ router.post('/:id/share', auth, fileController.shareFile);
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const file = await File.findById(req.params.id);
+    // console.log("paramss id : ",req.params.id)
+    // const file = await File.findById(req.params.id);
+    const file = await File.findOne({ fileID: req.params.id });
+
 
     if (!file) {
       return res.status(404).json({ message: 'File not found' });
     }
-
-    // Check if user owns the file
-    if (file.userId.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Not authorized to delete this file' });
-    }
-
-    // Remove the file from filesystem
-    if (fs.existsSync(file.path)) {
-      fs.unlinkSync(file.path);
-    }
+    
+    const delRes = await  driveServices.deleteFile(req.params.id);
+    // console.log("delRes",delRes)
+   
 
     // Remove from database using findByIdAndDelete instead of the deprecated remove() method
-    await File.findByIdAndDelete(req.params.id);
+    await File.findOneAndDelete({ fileID: req.params.id });
     
-    res.json({ message: 'File deleted successfully' });
+    return res.json({ message: 'File deleted successfullyyyyyy' });
+
   } catch (err) {
     console.error('Error deleting file:', err);
     res.status(500).send('Server error');
   }
 });
+
+// send file via email
+// @route   POST api/files/email
+// @desc    send file
+// @access  Private
+
+const storages = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Save files to the 'uploads/' directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); 
+  },
+});
+
+
+const uploads = multer({ storage: storages });
+
+router.post('/email', uploads.none(), fileController.shareFileViaEmail)
+
 
 module.exports = router;

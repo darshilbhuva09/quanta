@@ -62,6 +62,7 @@ const QuantaFileUploader = ({ onFileUploaded }) => {
   };
 
   const handleUpload = async () => {
+    console.log("ffffffile : ", file)
     if (!file) {
       return toast.error('Please select a file to upload');
     }
@@ -69,6 +70,7 @@ const QuantaFileUploader = ({ onFileUploaded }) => {
     // Create form data
     const formData = new FormData();
     formData.append('file', file);
+    console.log("formDataaaaaaaaaaa :", formData.get('file'))
 
     setUploading(true);
     setProgress(0);
@@ -103,12 +105,13 @@ const QuantaFileUploader = ({ onFileUploaded }) => {
 
       clearInterval(progressInterval);
       setProgress(100);
+      console.log("responseeeee :" , response.data.fileData)
       
       toast.success('File uploaded successfully!');
       
       // Pass the uploaded file data back to the parent component
       if (onFileUploaded && response.data) {
-        onFileUploaded(response.data);
+        onFileUploaded(response.data.fileData);
       }
       
       // Reset after successful upload

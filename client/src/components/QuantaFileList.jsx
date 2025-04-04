@@ -8,14 +8,16 @@ const QuantaFileList = ({ files = [], loading = false, onFileAction }) => {
   // Silently log files for troubleshooting
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
-      console.log('Files in QuantaFileList:', files);
+
+      // console.log('Files in QuantaFileList:', files);
     }
   }, [files]);
 
   const filteredFiles = files.filter((file) => {
     // Check if file exists before filtering
     if (!file) return false;
-    
+    // console.log(file.name,":" ,file.size)
+
     // Get the display name from originalName or name
     const displayName = (file.originalName || file.name || '').toLowerCase();
     const searchTerm = (search || '').toLowerCase();
@@ -117,7 +119,7 @@ const QuantaFileList = ({ files = [], loading = false, onFileAction }) => {
 
   // Check if files array is valid
   if (!Array.isArray(files)) {
-    console.error('Files prop is not an array:', files);
+    // console.error('Files prop is not an array:', files);
     return (
       <div className="qs-file-list-container">
         <div className="qs-empty-files">
@@ -169,10 +171,10 @@ const QuantaFileList = ({ files = [], loading = false, onFileAction }) => {
                 <div className="qs-file-details">
                   <div className="qs-file-detail-item">
                     <span className="qs-detail-label">Uploaded</span>
-                    <span className="qs-detail-value">
-                      {file.uploaded || (file.createdAt ? new Date(file.createdAt).toLocaleString() : 'Unknown')}
-                    </span>
-                  </div>
+                      <span className="qs-detail-value">
+                        {file.uploaded || (file.createdAt ? new Date(file.createdAt).toLocaleString() : 'Unknown')}
+                      </span>
+                    </div>
                   <div className="qs-file-detail-item">
                     <span className="qs-detail-label">Downloads</span>
                     <span className="qs-detail-value">
@@ -184,7 +186,7 @@ const QuantaFileList = ({ files = [], loading = false, onFileAction }) => {
                 <div className="qs-file-actions">
                   <button 
                     className="qs-action-button qs-download-btn" 
-                    onClick={() => handleDownload(file)}
+                    onClick={() => {handleDownload(file)}}
                     title="Download"
                   >
                     <FiDownload />

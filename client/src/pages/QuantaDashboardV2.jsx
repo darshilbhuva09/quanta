@@ -8,6 +8,10 @@ import QuantaShareModal from '../components/QuantaShareModal';
 import { FiUploadCloud, FiFolder, FiLogOut, FiHardDrive } from 'react-icons/fi';
 import axios from 'axios';
 import './QuantaDashboard.css';
+import { Clipboard } from "lucide-react"; 
+import {QRCodeCanvas} from "qrcode.react";
+import EmailService  from "../emailService/emailServices"
+
 
 const QuantaDashboardV2 = () => {
   const [activeTab, setActiveTab] = useState('upload');
@@ -36,24 +40,25 @@ const QuantaDashboardV2 = () => {
     const fetchFiles = async () => {
       try {
         setLoading(true);
-        console.log('Fetching files...');
+        // console.log('Fetching files...');
         const response = await axios.get('/api/files');
         
         if (response.data) {
-          console.log('Files fetched successfully:', response.data);
-          
+          // console.log('Files fetched successfully:', response.data);
+          // response.data.map(file => {console.log(file.name,":", file.size)})
+
           // Transform file data to ensure proper format
           const formattedFiles = response.data.map(file => ({
             ...file,
-            id: file._id, // Ensure id is available for the key prop
-            name: file.originalName || file.filename || 'Unnamed File',
+            id: file.id, // Ensure id is available for the key prop
+            name:  file.name || undefined ,
             size: formatFileSize(file.size || 0),
-            uploaded: new Date(file.createdAt).toLocaleString(),
+            uploaded: file.createdTime || new Date(file.createdAt).toLocaleString(),
             downloads: file.downloadCount || 0
           }));
           
           setFiles(formattedFiles);
-          
+          // console.log("formatedFiles :" ,formattedFiles)
           // Calculate storage usage
           const totalSizeInBytes = response.data.reduce((acc, file) => acc + (file.size || 0), 0);
           const usedSizeInGB = totalSizeInBytes / (1024 * 1024 * 1024);
@@ -67,7 +72,7 @@ const QuantaDashboardV2 = () => {
           });
         }
       } catch (error) {
-        console.error('Error fetching files:', error);
+        // console.error('Error fetching files:', error);
         if (error.response) {
           console.error('Server error response:', error.response.data);
         }
@@ -104,68 +109,51 @@ const QuantaDashboardV2 = () => {
   // Handle file actions (download, share, etc.)
   const handleFileAction = async (action, file) => {
     if (!file) {
-      console.error('No file provided for action:', action);
+      // console.error('No file provided for action:', action);
       return;
     }
     
-    console.log('File action:', action, 'for file:', file);
+    // console.log('File action -> ', action, 'for file:', file);
     
     switch (action) {
       case 'download':
         try {
           // Check if shortId exists, otherwise use the right ID format
-          const fileIdentifier = file.shortId || file._id || file.id;
-          if (!fileIdentifier) {
+          const fileId = file.id;
+          // console.log("id : ", fileId)
+          if (!fileId) {
             throw new Error('Missing file identifier for download');
           }
           
-          console.log(`Downloading file with identifier: ${fileIdentifier}`, file);
-          
-          // Create the download URL
-          const baseUrl = '/api/files/download/';
-          const downloadUrl = `${baseUrl}${fileIdentifier}`;
-          console.log('Download URL:', downloadUrl);
+          // console.log(`Downloading file with identifier: ${fileId}`, file);
+
+          const response = await axios.get(`/api/files/download/${fileId}`);
+          // console.log("response : ", response);
+          const downloadLink = response.data.downloadLink;
+          // console.log("downlodLink : ", downloadLink);
+        
+          if (downloadLink) {
+            const link = document.createElement('a');
+            link.href = downloadLink;
+            link.setAttribute('download', 'download'); // Or use file.originalName from the database if you send it.
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          } else {
+            // console.error("Download link not found in response");
+            alert("Download link not found");
+          }
           
           // Show "starting download" toast
           toast.info(`Starting download for ${file.originalName || file.name}...`);
           
-          // Initiate the download
-          const response = await axios.get(downloadUrl, {
-            responseType: 'blob',
-            timeout: 30000 // 30 second timeout
-          });
           
-          // Check if the response is valid
-          if (!response.data || response.data.size === 0) {
-            throw new Error('Empty file received from server');
-          }
-          
-          // Create a URL for the blob
-          const blobUrl = window.URL.createObjectURL(new Blob([response.data], { 
-            type: response.headers['content-type'] 
-          }));
-          
-          // Create link element and trigger download
-          const link = document.createElement('a');
-          link.href = blobUrl;
-          link.setAttribute('download', file.originalName || file.name || 'download');
-          document.body.appendChild(link);
-          
-          console.log('Triggering download via link');
-          link.click();
-          
-          // Clean up
-          setTimeout(() => {
-            window.URL.revokeObjectURL(blobUrl);
-            document.body.removeChild(link);
-          }, 100);
-          
-          toast.success(`Downloaded ${file.originalName || file.name}`);
-          
-          // Update the file list to reflect the new download count
+         // Update the file list to reflect the new download count
+        //  console.log("files ->  ",files)
           setFiles(prevFiles => 
             prevFiles.map(f => {
               if ((f.id === file.id) || (f._id === file._id) || (f.shortId === file.shortId)) {
+              // console.log("prevFiles : ",f.downloadCount)
                 const downloads = (f.downloadCount || f.downloads || 0) + 1;
                 return { ...f, downloads, downloadCount: downloads };
               }
@@ -173,7 +161,7 @@ const QuantaDashboardV2 = () => {
             })
           );
         } catch (error) {
-          console.error('Download error:', error);
+          // console.error('Download error:', error);
           if (error.response) {
             console.error('Download response error:', error.response.status, error.response.data);
           }
@@ -181,16 +169,24 @@ const QuantaDashboardV2 = () => {
         }
         break;
         
-      case 'link':
-      case 'qrcode':
+      case 'link':{
+        // console.log(action)
+             handleShareFile(file, action);
+          }
+        break;
+      case 'qrcode': {
+        // console.log(action)
+        handleQrCode(file)
+      }
+      break;
       case 'email':
-        setSelectedFile(file);
-        setShareMethod(action);
-        setShowShareModal(true);
+        // console.log(action);
+        handleEmail(file);
         break;
       
       case 'delete':
         handleDeleteFile(file);
+        // console.log("fff,", file.id)
         break;
         
       default:
@@ -205,24 +201,191 @@ const QuantaDashboardV2 = () => {
     setShareMethod(null);
   };
 
+ const handleEmail = async(file) =>{
+    
+      const userEmail = user.email;
+      // console.log("Fileeee : ", file);
+      // console.log("Fileeee : ", file.mimeType);
+      // console.log("User Email: ", userEmail);
+      // console.log("Is Instance of File?", file instanceof File);
+    
+      let emailToSend = "";
+      let messageToSend = "";
+    
+      const sendEmail = async (event) => {
+        event.preventDefault();
+    
+        if (!emailToSend || !messageToSend) {
+          toast.error("Please fill in both fields.");
+          return;
+        }
+    
+        
+          // console.log("UemailToSend ", emailToSend);
+          // console.log("messageToSend ", messageToSend);
+          // console.log("file ", file.name);
+
+        const formData = new FormData();
+
+        formData.append("from", userEmail);
+        formData.append("to", emailToSend);
+        formData.append("text", messageToSend);
+        formData.append("fileLink",  file.webContentLink);
+        formData.append("fileType",  file.mimeType);
+        formData.append("fileName",  file.name);
+        
+        try {
+          toast.info(`Email sending to ${emailToSend}`)
+            const response = await axios.post('/api/files/email', formData, {
+              headers : {
+                "Content-Type" : "multipart/form-data",
+              }
+            })
+          
+            
+              // console.log("ress : ", response)
+            if (response.data.success) {
+                toast.success("Email sent successfully!");
+            } else {
+                toast.error("Failed to send Email!");
+            }
+            
+        } catch (error) {
+          console.error("Email ErroR:", error);
+          toast.error("Failed to send email.");
+        }
+      };
+      toast.info(
+        <form>
+          <div style={{color:"black"}}>
+            <h2><b>Send Email</b></h2>
+            <br/>
+            <div className="email">
+          <input 
+            type="text" 
+            placeholder="Emailaddress to send.." 
+            onChange={(e) => (emailToSend = e.target.value)} 
+          />
+        </div>
+        <div className="text">
+          <input 
+            type="text" 
+            placeholder="Write message" 
+            onChange={(e) => (messageToSend = e.target.value)} 
+          />
+        </div>
+        <button 
+          className="sendEmail" 
+          type="submit" 
+          onClick={sendEmail} 
+          style={{ 
+            size: "10px", 
+            marginLeft: "5px", 
+            padding: "3px", 
+            color: "white", 
+            backgroundColor: "#4362EE", 
+            border: "none" 
+          }}
+        >
+          Send
+        </button>
+
+          </div>
+          </form>,
+        { icon: false,
+          position: "top-center",
+          autoClose: false, 
+          closeOnClick: false, 
+        }
+      )
+      
+ }
+
+  const handleQrCode = async(file) => {
+    const link = file.webViewLink;
+    toast.info(
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <h2>QR Code for file</h2>
+          <br />
+          <div  style={{
+              padding: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              width: "100%",
+              marginBottom: "10px",
+            }}
+          >
+            {link && (
+            <QRCodeCanvas value={link} size={150} bgColor="#ffffff" fgColor="#000000" />
+            )}
+          </div>  
+        </div>,
+        { icon: false,
+          position: "top-center",
+          autoClose: true,
+          closeOnClick: false,
+        }
+    )
+  }
+
+
+
   // Handle sharing the file via the selected method
   const handleShareFile = async (file, method, params = {}) => {
     try {
-      if (!file || !file._id) {
-        console.error('Invalid file for sharing:', file);
+      // console.log("share link : ",file.webViewLink)
+      if (!file) {
+        // console.error('Invalid file for sharing:', file);
         return;
       }
-      
-      const response = await axios.post(`/api/files/${file._id}/share`, {
-        method: method,
-        ...params
-      });
-      
-      if (response.data) {
-        toast.success(`File shared via ${method} successfully!`);
-        // Return the share data from the server
-        return response.data;
-      }
+      const link = file.webViewLink;
+      navigator.clipboard.writeText(link); 
+
+      toast.info(
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>
+            <p>Share Link!</p>
+            <input
+              type="text"
+              value={link}
+              readOnly
+          
+              style={{  
+                flex: 1, 
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "6px",
+                backgroundColor: "#f8f8f8",
+                fontSize: "14px",
+              }}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+          <div style={{paddingTop : "5px"}}>
+            <button style={{
+            border: "1px solid #ccc",
+            padding: "6px",
+            borderRadius:"6px"
+            }}
+              onClick={() => {
+                navigator.clipboard.writeText(link);
+                toast.success("Copied!");
+              }}
+              className="p-1 bg-blue-500 text-white rounded"
+            >
+              <Clipboard size={18} />
+            </button>
+          </div>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: true, 
+          closeOnClick: false, 
+        }
+      );
+    
+      toast.success(`Link generated for share file!`);
+
     } catch (error) {
       console.error(`Error sharing file via ${method}:`, error);
       toast.error(`Failed to share file via ${method}`);
@@ -231,15 +394,14 @@ const QuantaDashboardV2 = () => {
   };
 
   const handleDeleteFile = async (file) => {
-    if (!file || !file._id) {
-      console.error('Invalid file for deletion:', file);
-      return;
-    }
     
     try {
       // Call the API to delete the file
-      await axios.delete(`/api/files/${file._id}`);
-      
+      // console.log("file-id :", file.id)
+
+      const res = await axios.delete(`/api/files/${file.id}`);
+      // console.log("res of delete file int frontend :", res)
+
       // Update the UI by removing the file from state
       setFiles(files.filter(f => f._id !== file._id));
       
@@ -248,7 +410,7 @@ const QuantaDashboardV2 = () => {
       // Refresh file list to get updated storage usage
       setRefreshTrigger(prev => prev + 1);
     } catch (error) {
-      console.error('Error deleting file:', error);
+      // console.error('Error deleting file:', error);
       toast.error('Failed to delete file');
     }
   };
@@ -259,14 +421,18 @@ const QuantaDashboardV2 = () => {
       console.error('No file data received from upload');
       return;
     }
-    
-    console.log('File uploaded successfully:', uploadedFile);
+    // console.log("starting uploadd in frontend");
+    // console.log(uploadedFile)
+    // console.log('originalName:', uploadedFile.originalName);
+    // console.log('name:', uploadedFile.name);
+    // console.log('name:', typeof(uploadedFile));
+    // console.log('File uploaded successfullyyyyy:', uploadedFile.name);
     
     // Format the uploaded file to match the expected format
     const formattedFile = {
       ...uploadedFile,
       id: uploadedFile._id,
-      name: uploadedFile.originalName || uploadedFile.filename || 'Unnamed File',
+      name: uploadedFile.originalName || uploadedFile.name || 'Unnamed File',
       size: formatFileSize(uploadedFile.size || 0),
       uploaded: new Date(uploadedFile.createdAt).toLocaleString(),
       downloads: uploadedFile.downloadCount || 0
@@ -352,7 +518,7 @@ const QuantaDashboardV2 = () => {
         <div className="quanta-content">
           {activeTab === 'upload' ? (
             <QuantaFileUploader onFileUploaded={handleFileUploaded} />
-          ) : (
+            ) : (
             <div className="file-list-wrapper" style={{ position: 'relative', zIndex: 1 }}>
               <QuantaFileList 
                 files={files || []} // Ensure files is always an array

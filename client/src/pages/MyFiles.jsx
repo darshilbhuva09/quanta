@@ -18,16 +18,17 @@ const MyFiles = () => {
   }, []);
 
   const fetchFiles = async () => {
+    console.log("fetch")
     try {
       setLoading(true);
       const response = await axios.get('/api/files', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: {'Content-Type': 'application/json'},
         withCredentials: true
       });
+
+      // console.log("respons :" , response)
       
-      setFiles(response.data);
+      setFiles(response.data.files);
       setError(null);
     } catch (err) {
       console.error('Error fetching files:', err);
@@ -63,10 +64,7 @@ const MyFiles = () => {
             <button onClick={fetchFiles}>Try Again</button>
           </div>
         ) : (
-          <FilesList 
-            files={files} 
-            onFileSelect={handleFileSelect} 
-          />
+          <FilesList  files={files}  onFileSelect={handleFileSelect}  />
         )}
 
         {selectedFile && (

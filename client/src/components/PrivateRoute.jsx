@@ -8,28 +8,28 @@ const PrivateRoute = ({ children }) => {
   const [isChecking, setIsChecking] = useState(true);
 
   // Debug logs
-  console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
-  console.log('PrivateRoute - loading:', loading);
-  console.log('PrivateRoute - token exists:', !!token);
+  // console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
+  // console.log('PrivateRoute - loading:', loading);
+  // console.log('PrivateRoute - token exists:', !!token);
 
   useEffect(() => {
     // Quick check for token existence to avoid unnecessary loading
     if (!token) {
-      console.log('PrivateRoute - No token, redirecting to login');
+      // console.log('PrivateRoute - No token, redirecting to login');
       setIsChecking(false);
       return;
     }
 
     // Only wait for loading if we have a token
     if (!loading) {
-      console.log('PrivateRoute - Auth check complete');
+      // console.log('PrivateRoute - Auth check complete');
       setIsChecking(false);
     }
   }, [loading, token]);
 
   // Show a minimal loading indicator only if we're actually checking auth
   if (isChecking) {
-    console.log('PrivateRoute - Still checking auth...');
+    // console.log('PrivateRoute - Still checking auth...');
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>

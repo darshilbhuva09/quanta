@@ -10,12 +10,12 @@ axios.defaults.withCredentials = true;
 
 // Add request interceptor for debugging
 axios.interceptors.request.use(request => {
-  console.log('Starting Request', {
-    url: request.url,
-    method: request.method,
-    headers: request.headers,
-    data: request.data
-  });
+  // console.log('Starting Request', {
+  //   url: request.url,
+  //   method: request.method,
+  //   headers: request.headers,
+  //   data: request.data
+  // });
   return request;
 }, error => {
   console.error('Request Error:', error);
@@ -24,11 +24,11 @@ axios.interceptors.request.use(request => {
 
 // Add response interceptor for debugging
 axios.interceptors.response.use(response => {
-  console.log('Response:', {
-    status: response.status,
-    headers: response.headers,
-    data: response.data
-  });
+  // console.log('Response:', {
+  //   status: response.status,
+  //   headers: response.headers,
+  //   data: response.data
+  // });
   return response;
 }, error => {
   console.error('Response Error:', error.response ? {
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   // Set auth token in axios headers
   const setAuthToken = (token) => {
     if (token) {
-      console.log('Setting auth token in headers:', token.substring(0, 10) + '...');
+      // console.log('Setting auth token in headers:', token.substring(0, 10) + '...');
       axios.defaults.headers.common['x-auth-token'] = token;
       localStorage.setItem('token', token);
     } else {
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     const loadUser = async () => {
       const storedToken = localStorage.getItem('token');
       if (storedToken) {
-        console.log('Token found in localStorage, setting auth token', storedToken.substring(0, 10) + '...');
+        // console.log('Token found in localStorage, setting auth token', storedToken.substring(0, 10) + '...');
         setAuthToken(storedToken);
         try {
           // Test server connection first
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
           
           // Now try to get user data
           const res = await axios.get('/api/auth/user');
-          console.log('User data loaded:', res.data);
+          // console.log('User data loaded:', res.data);
           setUser(res.data);
           setIsAuthenticated(true);
         } catch (err) {
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }) => {
       delete axios.defaults.headers.common['x-auth-token'];
       
       const res = await axios.post('/api/auth/register', formData);
-      console.log('Registration successful:', res.data);
+      // console.log('Registration successful:', res.data);
       
       if (res.data && res.data.token) {
         localStorage.setItem('token', res.data.token);
@@ -146,7 +146,7 @@ export const AuthProvider = ({ children }) => {
       delete axios.defaults.headers.common['x-auth-token'];
       
       const res = await axios.post('/api/auth/login', formData);
-      console.log('Login successful:', res.data);
+      // console.log('Login successful:', res.data);
       
       if (res.data && res.data.token) {
         localStorage.setItem('token', res.data.token);
@@ -176,7 +176,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('Testing authentication...');
       const res = await axios.get('/api/auth/test');
-      console.log('Auth test successful:', res.data);
+      // console.log('Auth test successful:', res.data);
       toast.success('Authentication working properly!');
       return true;
     } catch (err) {
