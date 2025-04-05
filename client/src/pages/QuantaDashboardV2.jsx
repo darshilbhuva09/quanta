@@ -44,7 +44,7 @@ const QuantaDashboardV2 = () => {
         const response = await axios.get('/api/files');
         
         if (response.data) {
-          // console.log('Files fetched successfully:', response.data);
+          console.log('Files fetched successfully:', response.data);
           // response.data.map(file => {console.log(file.name,":", file.size)})
 
           // Transform file data to ensure proper format

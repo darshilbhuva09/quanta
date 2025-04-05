@@ -83,7 +83,7 @@ const FileUpload = ({ onFileUploaded }) => {
         },
         body: formData
       });
-
+      // console.log("res :", res.json)
       clearInterval(progressInterval);
 
       if (!res.ok) {
@@ -93,9 +93,9 @@ const FileUpload = ({ onFileUploaded }) => {
 
       setProgress(100);
       const data = await res.json();
-      // console.log("dataaaaa :" , data);
+      console.log("file upload resonse dataaaaa :" , data);
       setUploadedFile(data);
-      toast.success('File uploaded successfully!');
+      toast.success('File uploaded successfully!!!!!!!!!!!!!!!!');
       
       if (onFileUploaded) {
         onFileUploaded();

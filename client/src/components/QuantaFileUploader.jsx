@@ -122,6 +122,7 @@ const QuantaFileUploader = ({ onFileUploaded }) => {
           fileInputRef.current.value = '';
         }
       }, 1500);
+      return (response.data.fileData)
     } catch (err) {
       const errorMessage = err.response?.data?.message || 'Error uploading file';
       toast.error(errorMessage);

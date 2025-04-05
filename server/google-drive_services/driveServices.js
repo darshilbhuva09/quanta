@@ -111,10 +111,10 @@ exports.getFiles = async (folderId) => {
             name: fileObject.originalname,
             parents: [folderId],
         },
-        fields: "id,name,size, webViewLink, webContentLink",
+        fields: "id,name,size,createdTime, webViewLink, webContentLink",
     });
   //  console.log("dddddata : ", data )
-    console.log(`Uploaded file ${data.name} : id : ${data.id} :  size : ${data.size}`);
+    console.log(`Uploaded file ${data.name} : id : ${data.id} :  size : ${data.size} in drive`);
     return data;
 } catch (error) {
     console.error("Error uploading file:", error);

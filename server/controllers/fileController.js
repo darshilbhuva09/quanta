@@ -63,11 +63,11 @@ exports.uploadFile = async (req, res) => {
       const uploadData =  await driveServices.uploadFileToDrive(file, folderId);
 
       // console.log("Files uploaded successfully!")
-      // console.log(uploadData)
+      console.log("UploadData : ",uploadData)
       // console.log(uploadData.webContentLink)
       // console.log(uploadData.webViewLink)
               
-    
+
           
     const newFile = new File({
       fileID : uploadData.id,
@@ -78,7 +78,8 @@ exports.uploadFile = async (req, res) => {
       size: req.file.size,
       path: uploadData.webViewLink,  
       webViewLink : uploadData.webViewLink,
-      webContentLink : uploadData.webContentLink
+      webContentLink : uploadData.webContentLink,
+      createdAt : uploadData.createdTime
     });
 
     // console.log('Saving file to database');
@@ -112,6 +113,11 @@ exports.getUserFiles = async (req, res) => {
       return res.status(500).json({message : "error while file fetching"})
     } 
 
+    for(let i=0; i<files.length; i++){
+        let id = files[i].id;
+        let dc = await File.findOne({fileID : id});
+        files[i].downloadCount = dc.downloadCount;
+    }
     // console.log(`Found ${files.length} files for user`);   
     // console.log("files", files) 
     // files.forEach((file)=>{console.log(file.name, ":", )})
