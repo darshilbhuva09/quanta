@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "quanta-share-454613",
+  "private_key_id": "f751b05ad772b16603fb8dd6d104eb267ddec0ba",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7ep0q6Xp9Vj2E\niL95J8YPEozB1rlZnYyc+0sZ16tsycr9fT22etjUQWYqSlRznsQUrtYt1FUmQjpi\nLFi3eeTpTmejJV2Q87eHBJS4gW54ts2GtoSa4f3CBn9dCB7k831uePEL4dsqPvVm\nIKYFY39HFQYAZhiQ/8TvNYibXz2KgVqeCaYMNXvZyiJQMOLaH+nIjwK7kvOYPE1c\n4UWG8B4iXE6S9vKxd8KN8fuRrAW9Z6mUdka1arBAuuBtF6QdtKcKP2YY3p39yeFv\nw6Wj+NP19UeyHo7ULdMYP/zBy5+ivscL1RjS7W/RK2D2WjMRng/EOZIqM9GE2iT9\nw2OecYfTAgMBAAECggEAC70cLS0sUb++H1fOoV/nq1bugE6ZEW7neIbVh3s1DR0/\nfArE+/GKNRQZOQmpawnkXiUqXPlAEaKw9CexsF9OAXu6yoDS8HoKIkabp0fXanCL\nwuUXvXjsAiOVAva4tH44etvQv/0201jY1bmym4DE3ecHlqvN2vpg0teHw669dDgU\nytLrsn6lxjaJJXoSJjtzZc3bFRntk1wW0rbO6+hVNGU8ajPgJiL8N1VfZI8rkgC7\nhB5EIZdTEu8UQegLRmAJFFxrfLli/nj2PBQPVdU5d+N6+B81fFt2L+8gf4kgvoxn\nws+ay4OLaKCO6C5Vtf4oZ2GlZ5h1uPQFmXn2BpS5YQKBgQDgJHSgdiGc4r+dBtM5\nRmfkROLaLe1BgH7rNYIfcsAYGMLcmRlwjZGWhxpIOUaOcBSQuUVBI2yb0P4yjtne\ne5M+Q8yKiFctDENltA66l5z+0Ctv6blScvbkGa1mMrcJybZLT5iiNDQkI9TFQqdA\nQMkwWwZgOypRpJeJff/tICx48wKBgQDWICOKcSepYmM98pra38LGZS5lUdmO85uv\nBnx2KzErtEpiEk1oD+1i//l/4ZwjmcpooDAp+zV31QLB9Q5BAZeyDcFxKBpoj7UK\nmBjlkKTeF8k6WI7PK1kGTVCmjPuNGk99f/Lfa7PHgIwiEONl1ayz5Phg7SSOGvss\nI/2DP55toQKBgG/sJER/2HbzjsTFRLHj4zrL3w8dQcykcjvXAzva2+rsalknJdnb\nByjIG6qW1xGHC+3cZaWKH9CKgnQSet4qjLLZvggq3oUDC6B8UaKA1Ic0wYvnhH+U\nIo5x9/EBP/7mN13RyCCuup6VOciqaMOf1haMTVm+EXqlGnowbZwlpa9bAoGAR67y\ntwIyuO4LM03osaV/W1O8OIcyQj0jvXB6ckT7bRoqXLKr306VtjLjoAAzeWee72/R\nL/y9ZaSWC8CySOjzk9QvEmbOkHqrrSRGEXRe/UsRPssu5AQrBYUUnu1LuW05d1ZC\nRLGVuhA62Zy1w/3Il2DsFebN+hTmSVyzHiFKNIECgYEA2Dp8aA1pYImzWuVD4A9j\ne9PhHk6Zylt6KssqI5gVa6rQVc6ZkT42iLWL5aXFCRN7P1HP6uBkoluNvi0X63eS\nZ6EqFDNDf4aw6TCauCtthDzJDdtslKlWexTYnk0hLLIOGkQJpuMfc3MWFHmk/Wa2\n3mKtWqLsMaMkVbd3u84NJ08=\n-----END PRIVATE KEY-----\n",
+  "client_email": "quanta-shqre@quanta-share-454613.iam.gserviceaccount.com",
+  "client_id": "111274520699226040715",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/quanta-shqre%40quanta-share-454613.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
