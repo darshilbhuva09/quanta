@@ -93,6 +93,7 @@ const FileUpload = ({ onFileUploaded }) => {
 
       setProgress(100);
       const data = await res.json();
+      // console.log("dataaaaa :" , data);
       setUploadedFile(data);
       toast.success('File uploaded successfully!');
       

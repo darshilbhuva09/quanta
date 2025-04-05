@@ -29,8 +29,8 @@ app.use(cors({
       'http://localhost:5173', 
       'http://127.0.0.1:5173',
       'http://localhost:3000',
-      'http://127.0.0.1:3000',
       'http://localhost:5000',
+      'http://127.0.0.1:3000',
       'http://127.0.0.1:5000'
     ];
     
@@ -68,6 +68,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/files', require('./routes/files'));
 
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server error:', err.stack);
@@ -93,7 +94,7 @@ const connectDB = async () => {
       console.log('Authentication failed with MongoDB. Check your credentials.');
     } else {
       console.log('Will retry connection in 5 seconds...');
-      setTimeout(connectDB, 5000);
+      setTimeout(connectDB, 3000);
     }
   }
 };

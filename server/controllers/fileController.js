@@ -4,41 +4,88 @@ const path = require('path');
 const fs = require('fs');
 const QRCode = require('qrcode');
 const nodemailer = require('nodemailer');
+const driveServices = require('../google-drive_services/driveServices')
+const stream = require("stream");
+const { google } = require("googleapis");
+const axios = require('axios');
+
+
+
+const KEYFILEPATH = path.join(__dirname, "cred.json");
+const SCOPES = ["https://www.googleapis.com/auth/drive"];
+
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+
+const auth = new google.auth.GoogleAuth({
+    keyFile: KEYFILEPATH,
+    scopes: SCOPES,
+});
+
+
+const drive = google.drive({ version: "v3", auth });
+
 
 // @desc    Upload a file
 // @route   POST /api/files/upload
 exports.uploadFile = async (req, res) => {
   try {
-    console.log('File upload initiated');
+
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ message: "Invalid file or empty buffer" });
+    }else{
+      // console.log(req.file)
+    }
+  
     
+    // console.log('File upload initiated');
+
+    const userid = req.user.id;
+    const user = await User.findById(userid)
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const folderId = user.folderId;
+    //  console.log("folderid : ", folderId)
+
+
     if (!req.file) {
       console.error('No file in request');
       return res.status(400).json({ message: 'No file uploaded' });
     }
     
-    console.log('File details:', {
-      originalname: req.file.originalname,
-      size: req.file.size,
-      mimetype: req.file.mimetype,
-      path: req.file.path
-    });
+      // Upload file to Google Drive
+      // console.log("Uploading file to Google Drive...");
+      // console.log(req.file)
+      const file = req.file;
+
+      // Upload files if folder exists
+      const uploadData =  await driveServices.uploadFileToDrive(file, folderId);
+
+      // console.log("Files uploaded successfully!")
+      // console.log(uploadData)
+      // console.log(uploadData.webContentLink)
+      // console.log(uploadData.webViewLink)
+              
     
-    // Create new file document
+          
     const newFile = new File({
+      fileID : uploadData.id,
       userId: req.user.id,
-      filename: req.file.filename,
+      filename: uploadData.name,
       originalName: req.file.originalname,
       mimetype: req.file.mimetype,
       size: req.file.size,
-      path: req.file.path.replace(/\\/g, '/')
+      path: uploadData.webViewLink,  
+      webViewLink : uploadData.webViewLink,
+      webContentLink : uploadData.webContentLink
     });
 
-    console.log('Saving file to database');
+    // console.log('Saving file to database');
     await newFile.save();
-    
-    console.log('File saved successfully, id:', newFile._id, 'shortId:', newFile.shortId);
-    
-    res.status(201).json(newFile);
+
+     return res.status(200).json({ message: "File uploaded successfully", fileData : uploadData });
+
   } catch (err) {
     console.error('Error uploading file:', err);
     if (err.name === 'ValidationError') {
@@ -48,29 +95,28 @@ exports.uploadFile = async (req, res) => {
   }
 };
 
+
 // @desc    Get all files for a user
 // @route   GET /api/files
 exports.getUserFiles = async (req, res) => {
   try {
-    console.log(`Fetching files for user ID: ${req.user.id}`);
+    const userid = req.user.id
+    // console.log(`Fetching files for user ID: ${req.user.id}`);
+
+    const user = await User.findById(userid)
+    const folderId = user.folderId;
+    // console.log("folderid : ", folderId)
     
-    const files = await File.find({ userId: req.user.id }).sort({ createdAt: -1 });
-    
-    console.log(`Found ${files.length} files for user`);
-    
-    // Log a sample of the first file if available
-    if (files.length > 0) {
-      const sample = files[0];
-      console.log('Sample file:', {
-        id: sample._id,
-        shortId: sample.shortId,
-        name: sample.originalName,
-        size: sample.size,
-        downloadCount: sample.downloadCount
-      });
-    }
-    
-    res.json(files);
+    const files = await driveServices.getFiles(folderId)
+    if(!files){
+      return res.status(500).json({message : "error while file fetching"})
+    } 
+
+    // console.log(`Found ${files.length} files for user`);   
+    // console.log("files", files) 
+    // files.forEach((file)=>{console.log(file.name, ":", )})
+      res.json(files);
+
   } catch (err) {
     console.error('Error fetching user files:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
@@ -195,47 +241,87 @@ exports.shareFile = async (req, res) => {
 // @route   GET /api/files/download/:shortId
 exports.downloadFile = async (req, res) => {
   try {
-    console.log(`Download request for shortId: ${req.params.shortId}`);
-    const file = await File.findOne({ shortId: req.params.shortId });
+    // console.log("req : ", req)
+    const fileid = req.params.fileId;
+    // console.log(`Download request for fileId: ${fileid}`);
+
+    const file = await File.findOne({fileID : fileid});
 
     if (!file) {
-      console.error('File not found for shortId:', req.params.shortId);
-      return res.status(404).json({ message: 'File not found' });
+      return res.status(404).json({ error: "File not found" });
     }
+    // console.log("file from db : ", file);
 
-    console.log('File found:', file.originalName, 'Path:', file.path);
-    
-    // Validate the file path
-    const filePath = file.path;
-    
-    if (!fs.existsSync(filePath)) {
-      console.error('Physical file not found at path:', filePath);
-      return res.status(404).json({ message: 'File not found on server' });
-    }
+   file.downloadCount = file.downloadCount + 1;
+   await file.save();
 
-    // Increment download count
-    file.downloadCount += 1;
-    await file.save();
-
-    console.log(`Sending file: ${file.originalName}, Download count: ${file.downloadCount}`);
+    return res.status(200).json({ downloadLink: file.webContentLink });
     
-    // Send file with proper headers
-    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(file.originalName)}"`);
-    res.setHeader('Content-Type', file.mimetype || 'application/octet-stream');
-    
-    // Send file
-    res.download(filePath, file.originalName, (err) => {
-      if (err) {
-        console.error('Error during file download:', err);
-        
-        // If headers already sent, we can't send a new response
-        if (!res.headersSent) {
-          res.status(500).send('Error downloading file');
-        }
-      }
-    });
   } catch (err) {
     console.error('Download error:', err.message);
     res.status(500).send('Server error during download');
   }
 };
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Or your SMTP provider
+  auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+  },
+});
+
+
+const tmp = require('tmp'); 
+exports.shareFileViaEmail = async(req, res) => {
+
+    const { from, to, text , fileLink, fileType, fileName} = req.body;
+  
+    // console.log("file : ",fileLink)
+    // console.log("from : ", from)
+    // console.log("to : ", to)
+    // console.log("text : ", text)
+    // console.log("type : ", fileType)
+    // console.log("name : ", fileName)
+
+  try {
+    const response = await axios.get(fileLink, { responseType: 'stream' });
+
+    // console.log("Status Code:", response.status);
+    // console.log("Content-Type:", response.headers['content-type']);
+    // console.log("Content-Length:", response.headers['content-length']);
+    
+    // Save to a temporary file
+    const ext = path.extname(fileName) 
+    // console.log("ext : ", ext)
+
+    const tempFile = tmp.fileSync({ postfix: ext });
+    const writeStream = fs.createWriteStream(tempFile.name);
+    response.data.pipe(writeStream);
+
+    writeStream.on('finish', async () => {
+      const mailOptions = {
+        from,
+        to,
+        subject: "File from Quanta share",
+        text,
+        attachments: [
+          {
+            filename: fileName,
+            path: tempFile.name,
+          },
+        ],
+      };
+
+      await transporter.sendMail(mailOptions);
+      tempFile.removeCallback(); // Clean up temp file
+      res.json({ success: true, message: 'Email sent!' });
+    });
+
+  } catch (error) {
+    console.error("Error downloading or sending file:", error.message);
+    res.status(500).json({ success: false, message: "Failed to send email." });
+  }
+  
+}

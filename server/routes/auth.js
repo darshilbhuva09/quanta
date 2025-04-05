@@ -15,8 +15,7 @@ router.get('/ping', (req, res) => {
 // @route   POST api/auth/register
 // @desc    Register a user
 // @access  Public
-router.post(
-  '/register',
+router.post('/register',
   [
     check('username', 'Username is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
